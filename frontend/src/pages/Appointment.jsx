@@ -26,7 +26,6 @@ const Appointment = () => {
   const getAvailableSlots = () => {
     setDocSlots([]);
     const today = new Date();
-
     let generatedSlots = [];
 
     for (let i = 0; i < 7; i++) {
@@ -49,7 +48,6 @@ const Appointment = () => {
       while (startTime < endTime) {
         const formattedTime = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const slotDateKey = `${startTime.getDate()}_${startTime.getMonth() + 1}_${startTime.getFullYear()}`;
-
         const isAvailable = !docInfo?.slots_booked?.[slotDateKey]?.includes(formattedTime);
 
         if (isAvailable) {
@@ -138,7 +136,7 @@ const Appointment = () => {
         {/* Booking slots */}
         <div className="mt-12">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Choose a Slot
+            🕒 Choose a Slot
           </h2>
 
           <div className="flex gap-4 overflow-x-auto pb-2">
@@ -150,16 +148,17 @@ const Appointment = () => {
                   setSlotTime('');
                   setFormattedDate('');
                 }}
-                className={`min-w-[80px] text-center py-3 rounded-lg shadow-md cursor-pointer transition transform hover:scale-105 ${
-                  slotIndex === index
-                    ? 'bg-primary text-white'
-                    : 'bg-white text-gray-800 border'
-                }`}
+                className={`min-w-[80px] text-center py-3 px-2 rounded-lg shadow-md cursor-pointer transition transform hover:scale-105 border
+                  ${slotIndex === index ? 'bg-indigo-600 text-white font-bold' : 'bg-white text-gray-800'}
+                `}
               >
-                <p className="font-semibold">
+                <p className="text-sm font-semibold">
                   {day[0] && daysOfWeek[day[0].datetime.getDay()]}
                 </p>
-                <p>{day[0] && day[0].datetime.getDate()}</p>
+                <p className="text-lg">
+                  {day[0] && day[0].datetime.getDate()}
+                </p>
+                {index === 0 && <p className="text-xl text-black-600 font-semibold">Today</p>}
               </div>
             ))}
           </div>
@@ -178,18 +177,15 @@ const Appointment = () => {
                   )} ${dateObj.getFullYear()}`;
                   setFormattedDate(formatted);
                 }}
-                className={`px-5 py-2 rounded-full text-sm transition duration-300 ${
-                  slot.time === slotTime
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-                }`}
+                className={`px-5 py-2 rounded-full text-sm transition duration-300
+                  ${slot.time === slotTime ? 'bg-indigo-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'}
+                `}
               >
                 {slot.time}
               </button>
             ))}
           </div>
 
-          {/* Selected Date Preview */}
           {slotTime && formattedDate && (
             <p className="mt-6 text-lg text-gray-700 font-medium">
               Selected Slot: {formattedDate} | {slotTime}
@@ -198,7 +194,7 @@ const Appointment = () => {
 
           <button
             onClick={bookAppointment}
-            className="mt-8 bg-primary hover:bg-blue-700 text-white font-medium py-3 px-10 rounded-full transition-all duration-300"
+            className="mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-10 rounded-full transition-all duration-300"
           >
             Confirm Appointment
           </button>

@@ -15,7 +15,7 @@ const MyAppointments = () => {
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
   const formatDate = (slotDate) => {
     const [day, month, year] = slotDate.split('_')
-    return `${day} ${months[Number(month)]} ${year}`
+    return `${day} ${months[Number(month) - 1]} ${year}`
   }
 
   const getUserAppointments = async () => {
